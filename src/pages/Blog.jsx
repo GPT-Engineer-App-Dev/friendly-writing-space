@@ -1,5 +1,5 @@
-import { Box, Container, Heading, Text, VStack, Button, Input, Textarea, FormControl, FormLabel, useColorModeValue } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Container, Heading, Text, VStack, Button, Input, Textarea, FormControl, FormLabel, useColorModeValue, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay } from "@chakra-ui/react";
+import { useState, useRef } from "react";
 
 const Blog = () => {
   const [posts, setPosts] = useState([
@@ -8,6 +8,9 @@ const Blog = () => {
   ]);
 
   const [newPost, setNewPost] = useState({ title: "", content: "", date: "" });
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
+  const cancelRef = useRef();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +21,21 @@ const Blog = () => {
     e.preventDefault();
     setPosts([newPost, ...posts]);
     setNewPost({ title: "", content: "", date: "" });
+  };
+
+  const openDeleteDialog = (post) => {
+    setPostToDelete(post);
+    setDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setPostToDelete(null);
+  };
+
+  const handleDeletePost = () => {
+    setPosts(posts.filter((post) => post !== postToDelete));
+    closeDeleteDialog();
   };
 
   return (
@@ -52,10 +70,34 @@ const Blog = () => {
             <Text mt={2} fontSize="sm" color="gray.500">
               {post.date}
             </Text>
+            <Button colorScheme="red" onClick={() => openDeleteDialog(post)}>Delete</Button>
           </Box>
         ))}
-        
       </VStack>
+      <AlertDialog
+        isOpen={isDeleteDialogOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={closeDeleteDialog}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Post
+            </AlertDialogHeader>
+            <AlertDialogBody>
+              Are you sure you want to delete this post? This action cannot be undone.
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={closeDeleteDialog}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={handleDeletePost} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Container>
   );
 };
