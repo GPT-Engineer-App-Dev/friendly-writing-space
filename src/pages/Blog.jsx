@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, VStack, Button, Input, Textarea, FormControl, FormLabel } from "@chakra-ui/react";
+import { Box, Container, Heading, Text, VStack, Button, Input, Textarea, FormControl, FormLabel, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 
 const Blog = () => {
@@ -21,7 +21,7 @@ const Blog = () => {
   };
 
   return (
-    <Container maxW="container.md" py={10}>
+    <Container maxW="container.md" py={10} bg={useColorModeValue("white", "gray.900")} color={useColorModeValue("black", "white")}>
       <Heading as="h1" mb={4}>
         Blog
       </Heading>
@@ -46,7 +46,7 @@ const Blog = () => {
       </Box>
       <VStack spacing={4} align="stretch">
         {posts.map((post, index) => (
-          <Box key={index} p={5} shadow="md" borderWidth="1px">
+          <Box key={index} p={5} shadow="md" borderWidth="1px" bg={useColorModeValue("gray.100", "gray.700")} color={useColorModeValue("black", "white")}>
             <Heading fontSize="xl">{post.title}</Heading>
             <Text mt={4}>{post.content}</Text>
             <Text mt={2} fontSize="sm" color="gray.500">

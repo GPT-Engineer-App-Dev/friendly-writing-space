@@ -1,9 +1,9 @@
-import { Box, Flex, Link, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, Link, Spacer, Text, useColorModeValue } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <Box bg="brand.700" px={4} py={2} color="white">
+    <Box bg={useColorModeValue("brand.700", "gray.800")} px={4} py={2} color={useColorModeValue("white", "gray.200")}>
       <Flex align="center">
         <Text fontSize="xl" fontWeight="bold">
           My Blog

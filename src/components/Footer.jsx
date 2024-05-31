@@ -1,9 +1,9 @@
-import { Box, Flex, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import { FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <Box bg="brand.900" color="white" py={4} mt={10}>
+    <Box bg={useColorModeValue("brand.900", "gray.800")} color={useColorModeValue("white", "gray.200")} py={4} mt={10}>
       <Flex direction="column" align="center">
         <Text mb={2}>Contact: email@example.com</Text>
         <Flex>
